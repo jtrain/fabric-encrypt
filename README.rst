@@ -11,6 +11,7 @@ A typical usage of the tool may look like this:
 
 
 .. code-block:: python
+
     import StringIO
 
     from fabric import api
