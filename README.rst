@@ -9,6 +9,7 @@ your team can have production access, while others can have preproduction.
 
 A typical usage of the tool may look like this:
 
+
 .. code-block:: python
     import StringIO
 
@@ -26,6 +27,7 @@ A typical usage of the tool may look like this:
         with decrypt_string('secrets/django_secrets.py.asc') as secrets:
             api.put(local_path=StringIO.StringIO(secrets),
                     remote_path='/www/deploy/conf/secrets.py')
+
 
 If using ``gpg-agent`` or ``gpg2`` you will only be prompted for the password
 once.
