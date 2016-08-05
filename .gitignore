@@ -4,6 +4,7 @@
 *.pyt
 *.pytc
 *.egg
+.Python
 .DS_Store
 .*.swp
 .coverage
@@ -16,3 +17,6 @@ TAGS
 tox.ini
 .idea/
 sites/*/_build
+bin/
+include/
+lib/
