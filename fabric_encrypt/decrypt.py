@@ -10,3 +10,13 @@ def decrypt(encrypted_filename, backend=None):
 
     with backend.decrypt(encrypted_filename) as filename:
         yield filename
+
+@contextmanager
+def decrypt_string(encrypted_filename, backend=None):
+
+    if not backend:
+        backend = get_default_backend()
+
+    with backend.decrypt_string(encrypted_filename) as content:
+        yield content
+

@@ -12,6 +12,7 @@ class EncryptBase(object):
     class ProgramNotFound(Exception):
         pass
 
+    @contextlib.contextmanager
     def decrypt_string(self, encrypted_filename):
 
         program = self._get_program()
@@ -19,21 +20,20 @@ class EncryptBase(object):
         command = self._build_command(program,
                                       arguments,
                                       encrypted_filename)
-        return local(command, capture=True)
+        yield local(command, capture=True)
 
     @contextlib.contextmanager
     def decrypt(self, encrypted_filename):
 
-        contents = self.decrypt_string(encrypted_filename)
-
-        try:
-            fd, plaintext_filename = self._get_destination(encrypted_filename)
-            with open(plaintext_filename, 'wb') as fo:
-                fo.write(contents)
-            yield plaintext_filename
-        finally:
-            os.close(fd)
-            os.remove(plaintext_filename)
+        with self.decrypt_string(encrypted_filename) as contents:
+            try:
+                fd, plaintext_filename = self._get_destination(encrypted_filename)
+                with open(plaintext_filename, 'wb') as fo:
+                    fo.write(contents)
+                yield plaintext_filename
+            finally:
+                os.close(fd)
+                os.remove(plaintext_filename)
 
     def _build_command(self, program, arguments, encrypted_filename):
         """
