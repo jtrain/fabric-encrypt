@@ -7,7 +7,7 @@ Instead, encrypt those secrets and check them into your source code. We can go
 one better, and allow access management to those secrets so some members of
 your team can have production access, while others can have preproduction.
 
-A typical usage of the tool may look like this.
+A typical usage of the tool may look like this:
 
 .. code-block:: python
     import StringIO
