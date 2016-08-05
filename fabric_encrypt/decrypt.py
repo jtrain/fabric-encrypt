@@ -1,16 +1,12 @@
 from contextlib import contextmanager
 
-from fabric.api import local
-
-from .backends import gpg
-
-DEFAULT_BACKEND = gpg.GPG()
+from fabric_encrypt.backends import get_default_backend
 
 @contextmanager
 def decrypt(encrypted_filename, backend=None):
 
     if not backend:
-        backend = DEFAULT_BACKEND
+        backend = get_default_backend()
 
-    cmd_string = backend.decrypt(encrypted_filename)
-    return local(cmd_string)
+    with backend.decrypt(encrypted_filename) as filename:
+        yield filename
