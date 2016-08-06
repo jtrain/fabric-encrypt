@@ -12,4 +12,4 @@ class GPG(EncryptBase):
 
     def prime_cache(self):
         program = self._get_program()
-        local("echo '' | {program} -s".format(program=program))
+        local("echo '' | {program} -as".format(program=program))
