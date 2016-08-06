@@ -1,6 +1,8 @@
 import os
 
-from .base import EncryptBase
+from fabric.api import local
+
+from fabric_encrypt.backends.base import EncryptBase
 
 
 class GPG(EncryptBase):
