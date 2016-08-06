@@ -35,6 +35,12 @@ class EncryptBase(object):
                 os.close(fd)
                 os.remove(plaintext_filename)
 
+    def prime_cache(self):
+        """
+        Do some trivial work in order to force the password to be
+        entered and hence prime the cache.
+        """
+
     def _build_command(self, program, arguments, encrypted_filename):
         """
         Builds a command that will decrypt and return a string
