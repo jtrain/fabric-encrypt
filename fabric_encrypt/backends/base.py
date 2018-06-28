@@ -12,9 +12,15 @@ class EncryptBase(object):
     class ProgramNotFound(Exception):
         pass
 
+    def on_decrypt(self):
+        """
+        Hook to run any command before decrypting.
+        """
+
     @contextlib.contextmanager
     def decrypt_string(self, encrypted_filename):
 
+        self.on_decrypt()
         program = self._get_program()
         arguments = self._get_decrypt_arguments(encrypted_filename)
         command = self._build_command(program,
@@ -25,6 +31,7 @@ class EncryptBase(object):
     @contextlib.contextmanager
     def decrypt(self, encrypted_filename):
 
+        self.on_decrypt()
         with self.decrypt_string(encrypted_filename) as contents:
             try:
                 fd, plaintext_filename = self._get_destination(encrypted_filename)
