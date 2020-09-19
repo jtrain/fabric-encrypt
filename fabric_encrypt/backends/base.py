@@ -23,9 +23,7 @@ class EncryptBase(object):
         self.on_decrypt()
         program = self._get_program()
         arguments = self._get_decrypt_arguments(encrypted_filename)
-        command = self._build_command(program,
-                                      arguments,
-                                      encrypted_filename)
+        command = self._build_command(program, arguments, encrypted_filename)
         yield local(command, capture=True)
 
     @contextlib.contextmanager
@@ -35,7 +33,7 @@ class EncryptBase(object):
         with self.decrypt_string(encrypted_filename) as contents:
             try:
                 fd, plaintext_filename = self._get_destination(encrypted_filename)
-                with open(plaintext_filename, 'wb') as fo:
+                with open(plaintext_filename, "wb") as fo:
                     fo.write(contents)
                 yield plaintext_filename
             finally:
@@ -55,9 +53,8 @@ class EncryptBase(object):
         """
 
         return self.command_template.format(
-            program=program,
-            arguments=arguments,
-            encrypted_filename=encrypted_filename)
+            program=program, arguments=arguments, encrypted_filename=encrypted_filename
+        )
 
     def _get_decrypt_arguments(self, encrypted_filename):
         return self.decrypt_arguments
@@ -72,10 +69,13 @@ class EncryptBase(object):
             except self.ProgramNotFound:
                 pass
 
-        raise self.ProgramNotFound(u"Unable to local any of {}".format(
-            ', '.join(self.programs)))
+        raise self.ProgramNotFound(
+            u"Unable to local any of {}".format(", ".join(self.programs))
+        )
 
     def _which_program(self, name):
         with settings(abort_exception=self.ProgramNotFound):
-            return local('which ' + name, capture=True)
-
+            program = local("which " + name, capture=True)
+            if not program:
+                raise self.ProgramNotFound
+            return program
