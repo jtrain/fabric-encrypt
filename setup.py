@@ -14,7 +14,7 @@ with open('README.rst') as f:
 
 long_description = readme
 
-install_requires=['fabric==1.11.1']
+install_requires=['fab-classic==1.18.0']
 
 
 setup(
