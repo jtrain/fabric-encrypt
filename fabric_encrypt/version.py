@@ -1,7 +1,7 @@
-VERSION = (0, 0, 1, 'alpha', 1)
+VERSION = (0, 0, 2, "alpha", 1)
 
 
-def get_version(form='short'):
+def get_version(form="short"):
     """
     Return a version string for this package, based on `VERSION`.
     Takes a single argument, ``form``, which should be one of the following
@@ -21,22 +21,22 @@ def get_version(form='short'):
     branch = "%s.%s" % (VERSION[0], VERSION[1])
     tertiary = VERSION[2]
     type_ = VERSION[3]
-    final = (type_ == "final")
+    final = type_ == "final"
     type_num = VERSION[4]
     firsts = "".join([x[0] for x in type_.split()])
 
     # Branch
-    versions['branch'] = branch
+    versions["branch"] = branch
 
     # Short
     v = branch
-    if (tertiary or final):
+    if tertiary or final:
         v += "." + str(tertiary)
     if not final:
         v += firsts
         if type_num:
             v += str(type_num)
-    versions['short'] = v
+    versions["short"] = v
 
     # Normal
     v = branch
@@ -47,7 +47,7 @@ def get_version(form='short'):
             v += " " + type_ + " " + str(type_num)
         else:
             v += " pre-" + type_
-    versions['normal'] = v
+    versions["normal"] = v
 
     # Verbose
     v = branch
@@ -60,17 +60,18 @@ def get_version(form='short'):
             v += " pre-" + type_
     else:
         v += " final"
-    versions['verbose'] = v
+    versions["verbose"] = v
 
     try:
         return versions[form]
     except KeyError:
-        if form == 'all':
+        if form == "all":
             return versions
         raise TypeError('"%s" is not a valid form specifier.' % form)
 
-__version__ = get_version('short')
+
+__version__ = get_version("short")
 
 
-if __name__ == '__main__':
-    print((get_version('all')))
+if __name__ == "__main__":
+    print(get_version("all"))
