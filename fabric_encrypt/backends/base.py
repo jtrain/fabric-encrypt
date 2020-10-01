@@ -70,7 +70,7 @@ class EncryptBase(object):
                 pass
 
         raise self.ProgramNotFound(
-            u"Unable to local any of {}".format(", ".join(self.programs))
+            "Unable to local any of {}".format(", ".join(self.programs))
         )
 
     def _which_program(self, name):
